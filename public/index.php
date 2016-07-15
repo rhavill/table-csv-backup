@@ -24,5 +24,7 @@ $app = require __DIR__.'/../bootstrap/app.php';
 | and wonderful application we have prepared for them.
 |
 */
-
-$app->run();
+// Changed to make app run from a subdirectory of web server root
+//$app->run();
+$request = Illuminate\Http\Request::capture();
+$app->run($request);
