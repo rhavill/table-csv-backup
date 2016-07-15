@@ -12,5 +12,14 @@
 */
 
 $app->get('/', function () use ($app) {
-    return view('home');
+    $tables = array();
+    $results = app('db')->select("SHOW TABLES");
+    foreach ($results as $result) {
+        $properties = get_object_vars($result);
+        if (count($properties) == 1) {
+            $keys = array_keys($properties);
+            $tables[] = $properties[$keys[0]];
+        }
+    }
+    return view('home', ['tables' => $tables]);
 });

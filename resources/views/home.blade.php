@@ -13,8 +13,19 @@
     <![endif]-->
 </head>
 <body>
-<h1>hello</h1>
-{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
+<div class="container">
+    <div class="page-header"><h1>hello</h1></div>
+    @if (count($tables) > 0)
+        <ul class="list-group">
+        @foreach ($tables as $table)
+            <li class="list-group-item">
+                {{ $table }}
+            </li>
+        @endforeach
+        </ul>
+    @endif
+    {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
+</div>
 </body>
 
 </html>
