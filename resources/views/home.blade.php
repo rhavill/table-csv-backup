@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CSV Backup</title>
+  <title>CSV Backup/Restore</title>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,11 +18,21 @@
     .table-name {
       overflow: hidden;
     }
+    .upload-button-container {
+      width:150px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
 <div class="container">
-  <div class="page-header"><h1>hello</h1></div>
+  <div class="page-header"><h1>CSV Backup/Restore</h1></div>
+  <div class="center-block upload-button-container">
+    <button type="button" class="btn btn-primary btn-lg btn-block">
+      <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+      Upload CSV
+    </button>
+  </div>
   @if (count($tables) > 0)
     <ul class="list-group">
       @foreach ($tables as $table)
