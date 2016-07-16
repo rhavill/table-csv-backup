@@ -32,9 +32,11 @@
               {{ $table }}
             </div>
             <div class="col-xs-4 text-right">
-              <a class="btn btn-default btn-xs" href="#" role="button">
-                                <span class="glyphicon glyphicon-download" aria-hidden="true">
-                                </span> Download
+              <a class="btn btn-default btn-xs"
+                 href="{{ url('table/'.$table) }}"
+                 role="button">
+                <span class="glyphicon glyphicon-download" aria-hidden="true">
+                </span> Download
               </a>
             </div>
           </div>
