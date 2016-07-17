@@ -93,10 +93,10 @@
           <span class="qq-upload-file-selector qq-upload-file"></span>
           <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
           <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
-          <span class="qq-upload-size-selector qq-upload-size"></span>
+          <!--span class="qq-upload-size-selector qq-upload-size"></span>
           <button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
           <button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
-          <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
+          <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button-->
           <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
         </li>
       </ul>
@@ -126,20 +126,23 @@
       </dialog>
     </div>
   </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
   <script>
-    window.onload = function() {
-    document.getElementById("upload-button-container")
-      .addEventListener("click", function(event) {
-        var tableName = document.getElementById('db-table-name').value.trim();
-        if (!tableName) {
-          event.preventDefault();
-          alert('Please enter a table name.')
-        }
-        else {
-          uploader.setParams({table: tableName});
-        }
-      }, true);
-    };
+    //window.onload = function() {
+    $( document ).ready(function() {
+      document.getElementById("upload-button-container")
+          .addEventListener("click", function (event) {
+            var tableName = document.getElementById('db-table-name').value.trim();
+            if (!tableName) {
+              event.preventDefault();
+              alert('Please enter a table name.')
+            }
+            else {
+              uploader.setParams({table: tableName});
+            }
+          }, true);
+    });
     var uploader = new qq.FineUploader({
       debug: true,
       element: document.getElementById('fine-uploader'),
@@ -152,17 +155,20 @@
       validation: {
         allowedExtensions: ['csv']
       },
-//      callbacks: {
+      callbacks: {
 //        onError: function(id, name, errorReason, xhrOrXdr) {
 //          alert(qq.format("Error on file number {} - {}.  Reason: {}", id, name, errorReason));
-//        }
-//      },
+//        },
+          onComplete: function(id, name, responseJson, xhr) {
+            //alert('complete ' + id + ' ' +name);
+            $('#fine-uploader .qq-file-id-' + id).delay(5000).fadeOut('slow');
+          }
+      },
       failedUploadTextDisplay: {
         mode: 'custom'
       }
     });
   </script>
-  {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
 </div>
 </body>
 
