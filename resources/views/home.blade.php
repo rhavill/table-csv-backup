@@ -49,7 +49,7 @@
             </div>
             <div class="col-xs-4 text-right">
               <a class="btn btn-default btn-xs btn-primary"
-                 href="{{ url('table/'.$table) }}"
+                 href="{{ url('csv-table/'.$table) }}"
                  role="button">
                 <span class="glyphicon glyphicon-download" aria-hidden="true">
                 </span> Download
@@ -148,7 +148,7 @@
       debug: true,
       element: document.getElementById('fine-uploader'),
       request: {
-        endpoint: '/ricardo/app.php/table'
+        endpoint: '/ricardo/app.php/csv-table'
       },
       retry: {
         enableAuto: false

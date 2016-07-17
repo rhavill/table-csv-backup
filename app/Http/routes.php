@@ -26,7 +26,7 @@ $app->get('/', function () use ($app) {
   return view('home', ['tables' => $tables]);
 });
 
-$app->get('/table/{table}', function ($table) {
+$app->get('/csv-table/{table}', function ($table) {
   try {
     $records = app('db')->select("SELECT * FROM " . Util::backtickEscape($table));
   }
@@ -72,7 +72,7 @@ $app->get('/table/{table}', function ($table) {
       ->header('Content-Transfer-Encoding', 'binary');
 });
 
-$app->post('/table', function () {
+$app->post('/csv-table', function () {
   $request = app('request');
   $table = $request->input('table');
   if ($request->hasFile('qqfile') && $request->file('qqfile')->isValid()) {
