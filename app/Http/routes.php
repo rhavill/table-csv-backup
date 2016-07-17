@@ -71,3 +71,7 @@ $app->get('/table/{table}', function ($table) {
       ->header('Content-Disposition', "attachment;filename=$fileName")
       ->header('Content-Transfer-Encoding', 'binary');
 });
+
+$app->post('/table', function () {
+  return json_encode(array('success'=> true, "uuid" => 1));
+});

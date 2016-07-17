@@ -120,14 +120,13 @@
       debug: true,
       element: document.getElementById('fine-uploader'),
       request: {
-        endpoint: '/uploads'
-      },
-      deleteFile: {
-        enabled: true,
-        endpoint: '/uploads'
+        endpoint: '/ricardo/app.php/table'
       },
       retry: {
         enableAuto: true
+      },
+      validation: {
+        allowedExtensions: ['csv']
       }
     });
   </script>
