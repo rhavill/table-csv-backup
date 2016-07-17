@@ -69,6 +69,7 @@ class CsvTableController extends Controller
         ->header('Content-Disposition', "attachment;filename=$fileName")
         ->header('Content-Transfer-Encoding', 'binary');
   }
+
   public function createTable() {
     $request = app('request');
     $table = $request->input('table');

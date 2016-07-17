@@ -127,23 +127,7 @@
       </dialog>
     </div>
   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
-  <script>
-    //window.onload = function() {
-    $( document ).ready(function() {
-      document.getElementById("upload-button-container")
-          .addEventListener("click", function (event) {
-            var tableName = document.getElementById('db-table-name').value.trim();
-            if (!tableName) {
-              event.preventDefault();
-              alert('Please enter a table name.')
-            }
-            else {
-              uploader.setParams({table: tableName});
-            }
-          }, true);
-    });
+  <script type="text/javascript">
     var uploader = new qq.FineUploader({
       debug: true,
       element: document.getElementById('fine-uploader'),
@@ -168,6 +152,24 @@
       failedUploadTextDisplay: {
         mode: 'custom'
       }
+    });
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
+  <script>
+    //window.onload = function() {
+    $( document ).ready(function() {
+      document.getElementById("upload-button-container")
+              .addEventListener("click", function (event) {
+                var tableName = document.getElementById('db-table-name').value.trim();
+                if (!tableName) {
+                  event.preventDefault();
+                  alert('Please enter a table name.')
+                }
+                else {
+                  uploader.setParams({table: tableName});
+                }
+              }, true);
     });
   </script>
 </div>
