@@ -141,9 +141,6 @@
         allowedExtensions: ['csv']
       },
       callbacks: {
-//        onError: function(id, name, errorReason, xhrOrXdr) {
-//          alert(qq.format("Error on file number {} - {}.  Reason: {}", id, name, errorReason));
-//        },
           onComplete: function(id, name, responseJson, xhr) {
             //alert('complete ' + id + ' ' +name);
             $('#fine-uploader .qq-file-id-' + id).delay(5000).fadeOut('slow');
@@ -160,16 +157,16 @@
     //window.onload = function() {
     $( document ).ready(function() {
       document.getElementById("upload-button-container")
-              .addEventListener("click", function (event) {
-                var tableName = document.getElementById('db-table-name').value.trim();
-                if (!tableName) {
-                  event.preventDefault();
-                  alert('Please enter a table name.')
-                }
-                else {
-                  uploader.setParams({table: tableName});
-                }
-              }, true);
+        .addEventListener("click", function (event) {
+          var tableName = document.getElementById('db-table-name').value.trim();
+          if (!tableName) {
+            event.preventDefault();
+            alert('Please enter a table name.')
+          }
+          else {
+            uploader.setParams({table: tableName});
+          }
+        }, true);
     });
   </script>
 </div>
