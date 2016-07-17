@@ -19,9 +19,15 @@
     .table-name {
       overflow: hidden;
     }
-    .upload-button-container {
+    #upload-inputs-container {
       width:330px;
       margin-bottom: 10px;
+    }
+    #upload-button-container {
+      padding-left: 0;
+    }
+    #upload-text-container {
+      padding-right: 10px;
     }
     .qq-upload-button-hover {
       background: none;
@@ -62,11 +68,11 @@
       <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
         <span class="qq-upload-drop-area-text-selector"></span>
       </div>
-      <div class="upload-button-container center-block row">
-        <div class="col-xs-7">
-          <input type="text" class="" id="db-table-name" placeholder="Enter a table name.">
+      <div id="upload-inputs-container" class="center-block row">
+        <div id="upload-text-container" class="col-xs-7">
+          <input type="text" class="form-control" id="db-table-name" placeholder="Enter a table name.">
         </div>
-        <div  id="upload-button-container" class="col-xs-5 qq-upload-button-selector">
+        <div id="upload-button-container" class="col-xs-5 qq-upload-button-selector">
           <button type="button" class="btn btn-primary">
             <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
             Upload CSV
