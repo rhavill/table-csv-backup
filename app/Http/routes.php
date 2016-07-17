@@ -73,5 +73,46 @@ $app->get('/table/{table}', function ($table) {
 });
 
 $app->post('/table', function () {
-  return json_encode(array('success'=> true, "uuid" => 1));
+  $request = app('request');
+  $table = $request->input('table');
+  if ($request->hasFile('qqfile') && $request->file('qqfile')->isValid()) {
+    $file = $request->file('qqfile');
+    //$mime = $file->getMimeType();
+    $fh = fopen($file->getRealPath(), 'r');
+    $firstRow = fgetcsv($fh, 1000, ",");
+    $sql= 'CREATE TABLE ' . Util::backtickEscape($table) . ' (';
+    foreach($firstRow as $columnName) {
+      $sql .= Util::backtickEscape($columnName).' VARCHAR(255), ';
+    }
+    $sql = substr($sql,0,strlen($sql)-2);
+    $sql .= ') ENGINE=InnoDB DEFAULT CHARSET=utf8';
+    app('db')->beginTransaction();
+    try {
+      app('db')->statement($sql);
+    }
+    catch (Exception $e) {
+      return json_encode(array('error'=> 'Error creating table. Check table name.'));
+    }
+    $sql= 'INSERT INTO ' . Util::backtickEscape($table) . ' VALUES ';
+    while (($row = fgetcsv($fh, 1000, ",")) !== FALSE) {
+      $values = array();
+      foreach ($row as $cell) {
+        $values[] = $cell == 'NULL' ? 'NULL' : app('db')->getPdo()->quote($cell);
+      }
+      $sql .= '('. implode(', ', $values) . '), ';
+    }
+    $sql = substr($sql,0,strlen($sql)-2);
+
+    try {
+      app('db')->statement($sql);
+    }
+    catch (Exception $e) {
+      app('db')->rollBack();
+      return json_encode(array('error'=> 'Error inserting data.'));
+    }
+    app('db')->commit();
+    fclose($fh);
+    return json_encode(array('success'=> true, 'table'=>$table, 'sql'=>$sql));
+  }
+  return json_encode(array('error'=> 'Error uploading file.'));
 });

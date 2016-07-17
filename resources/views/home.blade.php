@@ -129,6 +129,9 @@
           event.preventDefault();
           alert('Please enter a table name.')
         }
+        else {
+          uploader.setParams({table: tableName});
+        }
       }, true);
     };
     var uploader = new qq.FineUploader({
@@ -138,10 +141,18 @@
         endpoint: '/ricardo/app.php/table'
       },
       retry: {
-        enableAuto: true
+        enableAuto: false
       },
       validation: {
         allowedExtensions: ['csv']
+      },
+//      callbacks: {
+//        onError: function(id, name, errorReason, xhrOrXdr) {
+//          alert(qq.format("Error on file number {} - {}.  Reason: {}", id, name, errorReason));
+//        }
+//      },
+      failedUploadTextDisplay: {
+        mode: 'custom'
       }
     });
   </script>
