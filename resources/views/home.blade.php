@@ -20,7 +20,7 @@
       overflow: hidden;
     }
     .upload-button-container {
-      width:150px;
+      width:330px;
       margin-bottom: 10px;
     }
     .qq-upload-button-hover {
@@ -62,11 +62,16 @@
       <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
         <span class="qq-upload-drop-area-text-selector"></span>
       </div>
-      <div class="upload-button-container center-block qq-upload-button-selector ">
-        <button type="button" class="btn btn-primary btn-lg btn-block">
-          <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
-          Upload CSV
-        </button>
+      <div class="upload-button-container center-block row">
+        <div class="col-xs-7">
+          <input type="text" class="" id="db-table-name" placeholder="Enter a table name.">
+        </div>
+        <div  id="upload-button-container" class="col-xs-5 qq-upload-button-selector">
+          <button type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+            Upload CSV
+          </button>
+        </div>
       </div>
             <span class="qq-drop-processing-selector qq-drop-processing">
                 <span>Processing dropped files...</span>
@@ -116,6 +121,16 @@
     </div>
   </script>
   <script>
+    window.onload = function() {
+    document.getElementById("upload-button-container")
+      .addEventListener("click", function(event) {
+        var tableName = document.getElementById('db-table-name').value.trim();
+        if (!tableName) {
+          event.preventDefault();
+          alert('Please enter a table name.')
+        }
+      }, true);
+    };
     var uploader = new qq.FineUploader({
       debug: true,
       element: document.getElementById('fine-uploader'),
