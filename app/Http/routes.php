@@ -93,8 +93,10 @@ $app->post('/table', function () {
     catch (Exception $e) {
       return json_encode(array('error'=> 'Error creating table. Check table name.'));
     }
+    $doInsert = FALSE;
     $sql= 'INSERT INTO ' . Util::backtickEscape($table) . ' VALUES ';
     while (($row = fgetcsv($fh, 1000, ",")) !== FALSE) {
+      $doInsert = TRUE;
       $values = array();
       foreach ($row as $cell) {
         $values[] = $cell == 'NULL' ? 'NULL' : app('db')->getPdo()->quote($cell);
@@ -103,12 +105,14 @@ $app->post('/table', function () {
     }
     $sql = substr($sql,0,strlen($sql)-2);
 
-    try {
-      app('db')->statement($sql);
-    }
-    catch (Exception $e) {
-      app('db')->rollBack();
-      return json_encode(array('error'=> 'Error inserting data.'));
+    if ($doInsert) {
+      try {
+        app('db')->statement($sql);
+      }
+      catch (Exception $e) {
+        app('db')->rollBack();
+        return json_encode(array('error'=> 'Error inserting data.'));
+      }
     }
     app('db')->commit();
     fclose($fh);
