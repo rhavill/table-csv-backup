@@ -163,6 +163,10 @@
             event.preventDefault();
             alert('Please enter a table name.')
           }
+          else if (!tableName.match(/^\w+$/g)) {
+            event.preventDefault();
+            alert('Table name can only contain letters, numbers and underscore "_".')
+          }
           else {
             uploader.setParams({table: tableName});
           }
