@@ -144,6 +144,7 @@
           onComplete: function(id, name, responseJson, xhr) {
             //alert('complete ' + id + ' ' +name);
             $('#fine-uploader .qq-file-id-' + id).delay(5000).fadeOut('slow');
+            $('#db-table-name').val('');
           }
       },
       failedUploadTextDisplay: {
