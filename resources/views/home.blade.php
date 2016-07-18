@@ -33,6 +33,9 @@
     .qq-upload-button-hover {
       background: none;
     }
+    .qq-upload-file-selector, .qq-upload-status-text-selector {
+      color:#000000;
+    }
   </style>
 </head>
 <body>
