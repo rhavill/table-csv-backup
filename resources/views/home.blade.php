@@ -42,8 +42,8 @@
   @if (count($tables) > 0)
     <ul class="list-group">
       @foreach ($tables as $table)
-        <li class="list-group-item">
-          <div class="row">
+        <li class="list-group-item" data-table-name="{{$table}}">
+          <div class="row table-row">
             <div class="col-xs-8 table-name">
               {{ $table }}
             </div>
@@ -129,7 +129,7 @@
   </script>
   <script type="text/javascript">
     var uploader = new qq.FineUploader({
-      debug: true,
+      debug: false,
       element: document.getElementById('fine-uploader'),
       request: {
         endpoint: '/ricardo/app.php/csv-table'
@@ -152,6 +152,7 @@
     });
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//js.pusher.com/3.1/pusher.min.js"></script>
   {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
   <script>
     //window.onload = function() {
@@ -172,6 +173,53 @@
           }
         }, true);
     });
+        var pusher = new Pusher('aa51e1db1bbba2bc6280', {
+      //cluster: 'APP_CLUSTER'
+    });
+    var tableHtml = '<li class="list-group-item" data-table-name="--table--">' +
+      '<div class="row">' +
+        '<div class="col-xs-8 table-name">' +
+          '--table--' +
+        '</div>' +
+        '<div class="col-xs-4 text-right">' +
+          '<a class="btn btn-default btn-xs btn-primary" ' +
+              'href="--tableUrl--" ' +
+              'role="button"> ' +
+            '<span class="glyphicon glyphicon-download" aria-hidden="true">' +
+            '</span> Download' +
+          '</a>' +
+        '</div>' +
+      '</div>' +
+    '</li>';
+
+    var channel = pusher.subscribe('table');
+    channel.bind('create', function(table) {
+      var tables = getTables();
+      insertTable(table, tables);
+    });
+    function getTables() {
+      var tables = [];
+      $('.list-group-item').each(function(index, element) {
+        tables.push(element.getAttribute('data-table-name'));
+      });
+      return tables;
+    }
+    function insertTable(table, tables) {
+      var insertAfter = null;
+      tables.map(function(tableName) {
+        if (table > tableName) {
+          insertAfter = tableName;
+        }
+      });
+      var html = tableHtml.split('--table--').join(table);
+      html = html.split('--tableUrl--').join('/ricardo/app.php/csv-table/'+encodeURIComponent(table));
+      if (insertAfter) {
+        $(html).insertAfter($('.list-group-item[data-table-name="'+insertAfter+'"]'));
+      }
+      else {
+        $(html).prependTo( ".list-group" );
+      }
+    }
   </script>
 </div>
 </body>

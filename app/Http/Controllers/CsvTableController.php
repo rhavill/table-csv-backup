@@ -7,6 +7,7 @@
  */
 
 namespace App\Http\Controllers;
+use Pusher;
 use App\Util;
 
 class CsvTableController extends Controller
@@ -114,7 +115,19 @@ class CsvTableController extends Controller
       }
       app('db')->commit();
       fclose($fh);
-      return json_encode(array('success'=> true, 'table'=>$table, 'sql'=>$sql));
+
+      $options = array(
+          //'encrypted' => true
+      );
+      $pusher = new Pusher(
+          'aa51e1db1bbba2bc6280',
+          'b4d68e4fbe80ff16ccd8',
+          '226449',
+          $options
+      );
+
+      $pusher->trigger('table', 'create', $table);
+      return json_encode(array('success'=> true, 'table'=>$table));
     }
     return json_encode(array('error'=> 'Error uploading file.'));
   }
